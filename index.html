@@ -1,0 +1,113 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnergyWise | Energy Prediction</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f5ff;color:#26335f}
+nav{background:#202d59;color:white;padding:20px 8%;display:flex;justify-content:space-between;align-items:center}
+nav a{color:white;text-decoration:none;margin-left:20px}
+header{padding:65px 8%;background:linear-gradient(120deg,#e2e9ff,#eee3ff)}
+header h1{font-size:42px;margin:0 0 15px}
+header p{font-size:17px;line-height:1.7;max-width:600px}
+button{background:#7162c9;color:white;border:0;padding:13px 22px;border-radius:9px;cursor:pointer;font-size:15px}
+main{max-width:950px;margin:35px auto;padding:20px}
+.card{background:white;padding:28px;border-radius:18px;box-shadow:0 5px 25px #25285b10;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;margin-bottom:8px;font-weight:bold}
+input,select{width:100%;padding:12px;border:1px solid #d8d9ed;border-radius:8px;margin-bottom:18px;background:#fcfcff}
+#result{display:none;background:#e9e6ff;padding:22px;border-radius:12px;margin-top:22px}
+#result h2{font-size:32px;color:#6654ba}
+footer{text-align:center;padding:25px;color:#68739a}
+@media(max-width:600px){.grid{grid-template-columns:1fr}header h1{font-size:32px}nav{padding:18px 5%}nav a{margin-left:10px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <strong>⚡ EnergyWise</strong>
+  <div><a href="#home">Home</a><a href="#predict">Predict</a><a href="#about">About</a></div>
+</nav>
+
+<header id="home">
+  <h1>Your Energy, Understood.</h1>
+  <p>Explore your household electricity consumption with EnergyWise, an interactive energy estimation tool.</p>
+  <a href="#predict"><button>Start Prediction →</button></a>
+</header>
+
+<main>
+<section class="card" id="predict">
+<h2>⚡ Energy Consumption Estimator</h2>
+<p>Enter your household details to estimate daily electricity usage.</p>
+
+<form id="energyForm">
+<div class="grid">
+<div>
+<label for="people">Household members</label>
+<input id="people" type="number" min="1" max="20" value="4" required>
+</div>
+<div>
+<label for="appliances">Number of appliances</label>
+<input id="appliances" type="number" min="1" max="100" value="8" required>
+</div>
+<div>
+<label for="hours">Average usage per day (hours)</label>
+<input id="hours" type="number" min="1" max="24" value="6" required>
+</div>
+<div>
+<label for="temperature">Temperature (°C)</label>
+<input id="temperature" type="number" min="-10" max="55" value="28" required>
+</div>
+</div>
+<button type="submit">Estimate Consumption</button>
+</form>
+
+<div id="result" aria-live="polite">
+<p>Estimated daily consumption</p>
+<h2><span id="daily"></span> kWh</h2>
+<p>Estimated monthly consumption: <strong><span id="monthly"></span> kWh</strong></p>
+<p id="message"></p>
+</div>
+</section>
+
+<section class="card" id="about">
+<h2>About EnergyWise</h2>
+<p>EnergyWise is a household energy estimation project designed to demonstrate interactive data-driven calculations through a simple web interface.</p>
+<p><strong>Technologies:</strong> HTML, CSS and JavaScript.</p>
+<p><strong>Note:</strong> This version uses a sample calculation, not a trained machine learning model. The estimate is illustrative and does not replace actual meter readings.</p>
+</section>
+</main>
+
+<footer>EnergyWise © 2026 | Household Energy Estimator</footer>
+
+<script>
+document.getElementById("energyForm").addEventListener("submit",function(e){
+e.preventDefault();
+
+const people=Number(document.getElementById("people").value);
+const appliances=Number(document.getElementById("appliances").value);
+const hours=Number(document.getElementById("hours").value);
+const temperature=Number(document.getElementById("temperature").value);
+
+if(people<1||appliances<1||hours<1||hours>24||temperature<-10||temperature>55){
+alert("Please enter valid household details.");
+return;
+}
+
+const daily=+(people*0.5+appliances*0.15*hours+
+Math.max(0,temperature-25)*0.12).toFixed(2);
+
+document.getElementById("daily").textContent=daily;
+document.getElementById("monthly").textContent=(daily*30).toFixed(2);
+document.getElementById("message").textContent=
+"This is an illustrative estimate. Actual consumption depends on appliance power and usage.";
+document.getElementById("result").style.display="block";
+});
+</script>
+
+</body>
+</html>
+```
